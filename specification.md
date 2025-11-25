@@ -1,4 +1,4 @@
-# Project specification: Web Annotator MVP (Ratings & Comments)
+# Project specification: WebAnnotator MVP (ratings & comments)
 
 ## 1. Project overview
 

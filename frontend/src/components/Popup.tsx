@@ -41,7 +41,7 @@ export function Popup({ currentUrl }: PopupProps) {
 
   return (
     <div className="p-6 max-w-md">
-      <h1 className="text-xl font-bold mb-4">Web Annotator</h1>
+      <h1 className="text-xl font-bold mb-4">WebAnnotator</h1>
 
       {showSuccess && (
         <div className="bg-green-50 border border-green-200 rounded-md p-3 mb-4">

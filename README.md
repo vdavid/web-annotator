@@ -4,9 +4,12 @@ A social layer for the web that lets you rate articles and read community review
 
 ## Overview
 
-Annotator is a Chrome extension that acts like an IMDb for journalism. It allows users to rate articles (1-10 stars), write summaries or reviews, and instantly see the community consensus via a browser badge.
+WebAnnotator is a Chrome extension that acts like an IMDb for journalism.
+It allows users to rate articles (1–10 stars), write summaries or reviews, and instantly see the community consensus via a browser badge.
 
-Unlike generic commenting systems, Annotator is strictly focused on **articles**. It uses a smart heuristic to detect if a page is a news article or blog post, disabling itself on search engines, homepages, and web apps to maintain high-quality data. It creates a unified "canonical" URL for every page, ensuring that nytimes.com/article?utm_source=twitter and nytimes.com/article share the same rating history.
+Unlike generic commenting systems, WebAnnotator is strictly focused on **articles**.
+It uses a smart heuristic to detect if a page is a news article or blog post, disabling itself on search engines,
+homepages, and web apps to maintain high-quality data.
 
 ## Phase 1 Setup
 
@@ -70,7 +73,7 @@ Unlike generic commenting systems, Annotator is strictly focused on **articles**
    - Open Chrome and navigate to `chrome://extensions`
    - Enable **Developer mode** in the top right
    - Click **Load unpacked** and select the `frontend/dist` folder
-   - The Web Annotator icon should appear in your toolbar
+   - The WebAnnotator icon should appear in your toolbar
 
 5. For development with hot reload:
    ```bash

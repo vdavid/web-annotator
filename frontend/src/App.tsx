@@ -64,7 +64,7 @@ function App() {
   if (!isArticle) {
     return (
       <div className="p-6 max-w-md">
-        <h1 className="text-xl font-bold mb-4">Web Annotator</h1>
+        <h1 className="text-xl font-bold mb-4">WebAnnotator</h1>
         <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
           <p className="text-yellow-800 text-sm">
             Ratings are only available for articles.

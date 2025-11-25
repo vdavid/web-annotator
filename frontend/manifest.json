@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Web Annotator",
+  "name": "WebAnnotator",
   "version": "0.1.0",
   "description": "A social layer for the web that lets you rate articles and read community reviews",
   "permissions": ["activeTab", "storage", "scripting"],

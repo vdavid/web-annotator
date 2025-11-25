@@ -106,7 +106,7 @@ This project uses [mise](https://mise.jdx.dev) for tool version management. It a
 4. Open Chrome and navigate to chrome://extensions.
 5. Enable **Developer mode** in the top right.
 6. Click **Load unpacked** and select the extension/dist folder.
-7. The Annotator icon should appear in your toolbar.
+7. The WebAnnotator icon should appear in your toolbar.
 
 #### Quick Start (Recommended)
 

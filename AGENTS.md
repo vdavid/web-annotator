@@ -5,7 +5,7 @@ directly in your browser. It's a Chrome extension plus a back-end server.
 
 ## Tech stack
 
-Annotator uses a **Postgres** database, a **Go** (Standard Library + Chi) back end, and a **React 19** front end built with **Vite** and **CRXJS**.
+WebAnnotator uses a **Postgres** database, a **Go** (Standard Library + Chi) back end, and a **React 19** front end built with **Vite** and **CRXJS**.
 
 ## Dev process
 
