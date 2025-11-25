@@ -48,18 +48,20 @@ function App() {
 
     if (isArticle === null) {
         return (
-            <div className='p-6'>
-                <p className='text-gray-600'>Loading...</p>
+            <div className='p-6 bg-white dark:bg-gray-900'>
+                <p className='text-gray-600 dark:text-gray-400'>Loading...</p>
             </div>
         )
     }
 
     if (!isArticle) {
         return (
-            <div className='p-6 max-w-md'>
+            <div className='p-6 max-w-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100'>
                 <h1 className='text-xl font-bold mb-4'>WebAnnotator</h1>
-                <div className='bg-yellow-50 border border-yellow-200 rounded-md p-4'>
-                    <p className='text-yellow-800 text-sm'>Ratings are only available for articles.</p>
+                <div className='bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md p-4'>
+                    <p className='text-yellow-800 dark:text-yellow-200 text-sm'>
+                        Ratings are only available for articles.
+                    </p>
                 </div>
             </div>
         )

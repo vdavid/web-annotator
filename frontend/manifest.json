@@ -3,7 +3,7 @@
   "name": "WebAnnotator",
   "version": "0.3.0",
   "description": "Rate articles and summarize/review them for reference",
-  "permissions": ["activeTab", "storage", "scripting"],
+  "permissions": ["activeTab", "storage", "scripting", "tabs"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {

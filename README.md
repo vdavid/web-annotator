@@ -7,6 +7,8 @@ reviews directly in your browser.
 
 WebAnnotator deals with **articles** only, not web pages in general.
 
+<img width="1710" height="1282" alt="WebAnnotator UI screenshot" src="https://github.com/user-attachments/assets/af2c1f87-2e26-4183-ab70-7696d6fae9ef" />
+
 ## Running the back end
 
 ### Prerequisites

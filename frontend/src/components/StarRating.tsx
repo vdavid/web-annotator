@@ -30,9 +30,9 @@ export function StarRating({ rating, onRate, disabled = false }: StarRatingProps
     const getStarColor = (index: number) => {
         const displayRating = hoverRating || rating
         if (index <= displayRating) {
-            return 'text-yellow-400'
+            return 'text-yellow-400 dark:text-yellow-500'
         }
-        return 'text-gray-300'
+        return 'text-gray-300 dark:text-gray-600'
     }
 
     return (
