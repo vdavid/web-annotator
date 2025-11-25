@@ -9,11 +9,40 @@ function App() {
   useEffect(() => {
     // Get the current tab URL from Chrome extension API
     if (chrome?.tabs) {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs[0]?.url) {
+      chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+        if (tabs[0]?.url && tabs[0].id) {
           const url = tabs[0].url;
           setCurrentUrl(url);
-          setIsArticle(isArticleURL(url));
+
+          // First check URL structure (fast, no DOM access needed)
+          const urlCheck = isArticleURL(url);
+
+          if (urlCheck) {
+            setIsArticle(true);
+          } else {
+            // URL structure doesn't suggest article, check DOM via content script
+            try {
+              void chrome.tabs.sendMessage(
+                tabs[0].id,
+                { action: 'checkIsArticle' },
+                (response) => {
+                  if (chrome.runtime.lastError) {
+                    // Content script might not be loaded (e.g., chrome:// pages)
+                    console.error(
+                      'Content script error:',
+                      chrome.runtime.lastError
+                    );
+                    setIsArticle(false);
+                  } else {
+                    setIsArticle(response?.isArticle || false);
+                  }
+                }
+              );
+            } catch (error) {
+              console.error('Error checking page DOM:', error);
+              setIsArticle(false);
+            }
+          }
         }
       });
     } else {
