@@ -1,84 +1,38 @@
 # WebAnnotator
 
-A social layer for the web that lets you rate articles and read community reviews directly in your browser.
+WebAnnotator is a Chrome extension that lets you augment articles with ratings and reviews/summaries.
 
-## Overview
+Same in marketing talk: WebAnnotator is a social layer for the web ✨ that lets you rate articles and read community
+reviews directly in your browser.
 
-WebAnnotator is a Chrome extension that acts like an IMDb for journalism.
-It allows users to rate articles (1–10 stars), write summaries or reviews, and instantly see the community consensus via a browser badge.
+WebAnnotator deals with **articles** only, not web pages in general.
 
-Unlike generic commenting systems, WebAnnotator is strictly focused on **articles**.
-It uses a smart heuristic to detect if a page is a news article or blog post, disabling itself on search engines,
-homepages, and web apps to maintain high-quality data.
-
-## Phase 1 Setup
+## Running the back end
 
 ### Prerequisites
 
 - **Go 1.25+** installed
-- **Node.js 20+** and **pnpm** installed
+- **Node.js 25+** and **pnpm** installed
 - **Docker** and **Docker Compose** installed
 - A Chromium-based browser (Chrome, Brave, Edge)
 
-### Backend Setup
+### Steps
 
-1. Start the PostgreSQL database (from project root):
-   ```bash
-   docker compose up -d
-   ```
+1. `git clone git@github.com:vdavid/web-annotator.git` to clone the repo
+2. `cd web-annotator`
+3. `docker compose up -d` to start Postgres
+4. `cd backend && go mod download && cd ..` to install Go deps
+5. `cd backend`
+6. `go run cmd/server/main.go` to run the server
+7. `curl http://localhost:8080/ping` to test the server is running
 
-2. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
+## Features
 
-3. Install Go dependencies:
-   ```bash
-   go mod download
-   ```
-
-4. Run the server:
-   ```bash
-   go run cmd/server/main.go
-   ```
-
-   Or use Air for live reload (install with `go install github.com/air-verse/air@latest`):
-   ```bash
-   air
-   ```
-
-5. The API will be available at `http://localhost:8080`. Test it:
-   ```bash
-   curl http://localhost:8080/ping
-   ```
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-
-3. Build the extension:
-   ```bash
-   pnpm build
-   ```
-
-4. Load the extension in Chrome:
-   - Open Chrome and navigate to `chrome://extensions`
-   - Enable **Developer mode** in the top right
-   - Click **Load unpacked** and select the `frontend/dist` folder
-   - The WebAnnotator icon should appear in your toolbar
-
-5. For development with hot reload:
-   ```bash
-   pnpm dev
-   ```
+* **Article detection:** Automatically detects valid articles using Open Graph tags (og:type), JSON-LD schema, and URL path depth analysis.
+* **One-click ratings:** Rate any article on a scale of 1–10.
+* **Instant context:** The extension icon updates immediately to show how many ratings a page has and the average rating.
+* **Smart canonicalization:** Ratings persist even if you visit the link from a newsletter or social media wrapper.
+* **Dark mode:** The UI respects your system's light/dark preference.
 
 ## Contributing
 
