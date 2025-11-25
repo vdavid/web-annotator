@@ -30,7 +30,7 @@ function App() {
                     // Content script might not be loaded (e.g., chrome:// pages)
                     console.error(
                       'Content script error:',
-                      chrome.runtime.lastError
+                      chrome.runtime.lastError.message || chrome.runtime.lastError
                     );
                     setIsArticle(false);
                   } else {

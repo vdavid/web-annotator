@@ -7,6 +7,9 @@ import manifest from './manifest.json';
 
 export default defineConfig({
   plugins: [react(), crx({ manifest }), tailwindcss()],
+  // build: {
+  //   sourcemap: true, // Enable source maps for debugging
+  // },
   test: {
     globals: true,
     environment: 'jsdom',
