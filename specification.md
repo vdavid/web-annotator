@@ -2,7 +2,7 @@
 
 ## 1. Project overview
 
-Concept: A Chrome Extension that acts as a "social layer" for the web. It allows users to rate articles (1-10 stars) and leave summaries/reviews.
+Concept: A Chrome Extension that acts as a "social layer" for the web. It allows users to rate articles (1–10 stars) and leave summaries/reviews.
 
 MVP goal: A stable, end-to-end system where a user can open the extension on a news article, see if it has been rated, and submit their own rating/comment.
 
@@ -14,52 +14,13 @@ Key constraint: Quality over quantity. We only want to enable ratings on actual 
 
 **Frontend (Chrome extension)**
 
-* **Language:** `TypeScript`
-* **Framework:** React 19+, with functional components and hooks.
-* **Package manager:** pnpm.
-* **Build Tool:** [`Vite`](https://vitejs.dev/) with [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react)
-    * Fast build tool and dev server. Provides HMR (Hot Module Replacement) for rapid development.
-    * The React plugin enables JSX/TSX transformation and React Fast Refresh.
-* **Extension Glue:** [`CRXJS`](https://github.com/crxjs/chrome-extension-tools) (Crucial for Hot Module Replacement)
-* **Styling:** [`Tailwind CSS 4`](https://tailwindcss.com/) with [`@tailwindcss/vite`](https://tailwindcss.com/docs/installation/vite)
-    * Utility-first CSS framework. The Vite plugin enables seamless integration with the build process.
-* **Routing:** [`react-router-dom`](https://reactrouter.com/) (for URL-based navigation, e.g., `/inbox`, `/thread/id`).
 * **State management:**
     * [`@tanstack/react-query`](https://tanstack.com/query) (React Query): For server state (caching, invalidating, and refetching all data from our Go API).
-* **Linting/Formatting:**
-    * [`ESLint`](https://eslint.org/): Code linting with TypeScript support via [`@typescript-eslint/eslint-plugin`](https://typescript-eslint.io/) and [`@typescript-eslint/parser`](https://typescript-eslint.io/).
-    * [`eslint-plugin-react`](https://github.com/jsx-eslint/eslint-plugin-react), [`eslint-plugin-react-hooks`](https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks), and related plugins for React-specific rules.
-    * [`eslint-plugin-import`](https://github.com/import-js/eslint-plugin-import): For import/export validation.
-    * [`Prettier`](https://prettier.io/): Code formatting with ESLint integration via [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) and [`eslint-plugin-prettier`](https://github.com/prettier/eslint-plugin-prettier).
-* **Testing:**
-    * [`Vitest`](https://vitest.dev/): Fast unit and integration test runner, compatible with Jest APIs.
-    * [`@testing-library/react`](https://testing-library.com/react): For testing React components.
-    * [`@testing-library/jest-dom`](https://github.com/testing-library/jest-dom): Custom Jest/Vitest matchers for DOM assertions.
-    * [`@testing-library/user-event`](https://testing-library.com/docs/user-event/intro): For simulating user interactions.
-    * [`msw`](https://mswjs.io/) (Mock Service Worker): For API mocking in tests.
-    * [`@playwright/test`](https://playwright.dev/): For end-to-end tests.
 
 **Backend (API)**
 
-* **Language:** `Go`
-* **Database Migrations:** [`golang-migrate`](https://github.com/golang-migrate/migrate)
-    * SQL migration tool for managing Postgres schema changes.
-    * Migrations are stored in `backend/migrations/`.
-* **Database:** `PostgreSQL`
-* **Configuration:** [`github.com/joho/godotenv`](https://github.com/joho/godotenv)
-    * For loading environment variables from `.env` files in development mode.
-    * Automatically loads `.env` when `VMAIL_ENV` is set to "development".
-* **HTTP Router:** Standard library [`http.ServeMux`](https://pkg.go.dev/net/http#ServeMux)
-    * Battle-tested and well-documented. No external router dependency needed.
-    * Selected based on [this guide](https://www.alexedwards.net/blog/which-go-router-should-i-use)
 * **Encryption:** Standard `crypto/aes` and `crypto/cipher`
     * For encrypting/decrypting user credentials in the DB using AES-GCM.
-* **Database Driver:** `pgx`
-* **Go Live Reload (dev-only):** [`air`](https://github.com/air-verse/air)
-    * Live reload tool for Go applications during development.
-    * Automatically rebuilds and restarts the server when Go files change.
-    * Configured via `.air.toml` in the project root.
-    * **Note:** This is a development-only tool and is not used in production.
 * **CI/CD:** [`GitHub Actions`](https://github.com/features/actions)
     * Automated testing, linting, and formatting checks on pull requests and pushes.
 * **Code Quality (Go):**
@@ -83,9 +44,6 @@ Key constraint: Quality over quantity. We only want to enable ratings on actual 
 
 **Infrastructure**
 
-* **Containerization:** [`Docker`](https://www.docker.com/) and [`Docker Compose`](https://docs.docker.com/compose/)
-    * Used for deployment only.
-    * Multi-stage Dockerfile builds both frontend and backend.
 * **Auth:** Mocked for MVP (Single hardcoded user).
 
 ## 3. Architecture & data flow
@@ -125,9 +83,9 @@ Overview:
 
 ### Phase 4: The polish (Day 7)
 
-* [ ] **Service Worker:** Implement the background script to fetch rating counts and update the Extension Badge text.
+* [ ] **Service Worker:** Implement the background script to fetch rating counts and update the extension badge text.
 * [ ] **Dark Mode:** Ensure the Popup looks good in dark mode.
-* [ ] **Cleanup:** Remove console logs, format code (`Prettier`/`GoFmt`).
+* [ ] **Cleanup:** Remove console logs, format code (`prettier`/`gofmt`).
 
 ---
 
