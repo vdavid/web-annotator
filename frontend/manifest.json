@@ -3,7 +3,7 @@
   "name": "Web Annotator",
   "version": "0.1.0",
   "description": "A social layer for the web that lets you rate articles and read community reviews",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "scripting"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
@@ -21,5 +21,3 @@
     "128": "icons/icon128.png"
   }
 }
-
-

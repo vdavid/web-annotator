@@ -97,124 +97,7 @@ Key constraint: Quality over quantity. We only want to enable ratings on actual 
 5. **Data fetch:** Popup requests existing rating for the current URL.
 6. **Submission:** User submits data; Backend normalizes the URL and saves to `Postgres`.
 
-## 4. Specific implementation details
-
-### A. Frontend: "Article detection" (The Filter)
-
-Goal: Prevent spamming ratings on google.com or localhost.
-
-Logic: Before allowing a rating, the frontend must validate the page.
-
-The Heuristic (Implement in `TypeScript`):
-
-Return true (allow rating) if ANY of these are true:
-
-1. **Meta tag:** Page has &lt;meta property="og:type" content="article" />.
-2. **Schema.org:** Page contains `JSON-LD` with "@type": "Article" or "NewsArticle".
-3. **URL structure:** The path depth is > 2 (e.g., nytimes.com/2025/10/my-post).
-
-*Note:* If the page fails this check, show a UI message: "Ratings are only available for articles."
-
-### B. Backend: URL normalization (The Critical Logic)
-
-Goal: nytimes.com/art?utm_source=twitter and nytimes.com/art must be treated as the same page.
-
-Location: Implement this in `Go` before touching the database.
-
-**Ruleset:**
-
-1. **Lowercase:** Convert the entire string to lowercase.
-2. **Scheme:** Force `https` (unless strictly necessary otherwise).
-3. **Host:** Remove `www.` prefix.
-4. **Path:** Remove trailing slashes (/article/ -> /article).
-5. **Fragment:** Remove anchors (#comments).
-6. **Query params:**
-    * **Remove** these specific keys: `utm_*`, `gclid`, `fbclid`, `ref`, `source`, `share`.
-    * **Keep** other parameters (e.g., ?id=123).
-    * **Sort** remaining parameters alphabetically so ?a=1&b=2 equals ?b=2&a=1.
-
-### C. Authentication (Mocked)
-
-Do not build a login system yet.
-
-* **Frontend:** Send a header in every request: `X-User-ID`: &lt;HARDCODED-UUID-HERE>.
-* **Backend:** Write a Middleware that reads this header and injects it into the request Context. This makes swapping to real `Auth0` later easy.
-
----
-
-## 5. Database schema (`PostgreSQL`)
-
-```sql
-CREATE TABLE users (
-id UUID PRIMARY KEY,
-username VARCHAR(255) NOT NULL -- Just use "Test User" for now
-);
-
-CREATE TABLE pages (
-id BIGSERIAL PRIMARY KEY,
-url_hash VARCHAR(64) UNIQUE NOT NULL, -- SHA256 of the normalized URL
-normalized_url TEXT NOT NULL,         -- Human readable version
-created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE ratings (
-id BIGSERIAL PRIMARY KEY,
-user_id UUID REFERENCES users(id),
-page_id BIGINT REFERENCES pages(id),
-score INT CHECK (score >= 1 AND score <= 10),
-comment TEXT,
-created_at TIMESTAMP DEFAULT NOW(),
-updated_at TIMESTAMP DEFAULT NOW(),
-UNIQUE(user_id, page_id) -- Constraint: One rating per user per page
-);
-```
-
----
-
-## 6. API contract
-
-### 1. Check page metadata
-
-Endpoint: `GET /api/v1/pages/check`
-
-Query param: `url` (Raw URL from browser)
-
-Response:
-
-```json
-{
-"can_rate": true, // Result of server-side validation if any
-"stats": {
-"total_ratings": 15,
-"average_score": 8.4
-},
-"user_rating": {
-"has_rated": true,
-"score": 9,
-"comment": "My review text..."
-}
-}
-```
-
-### 2. Submit rating
-
-Endpoint: `POST /api/v1/ratings`
-
-Headers: `X-User-ID`: ...
-
-Body:
-
-```json
-{
-"url": "https://raw-url-from-browser...",
-"score": 8,
-"comment": "Optional text"
-}
-```
-
----
-
-## 7. Developer milestones (Task List)
+## 4. Developer milestones (task list)
 
 ### Phase 1: The skeleton (Days 1-2)
 
@@ -232,9 +115,13 @@ Body:
 
 ### Phase 3: The feature (Days 5-6)
 
-* [ ] **API Implementation:** Build the `GET /check` and `POST /rating` handlers.
-* [ ] **UI Implementation:** Build the Rating component (Stars + Textarea) in `React` using `Tailwind`.
-* [ ] **Wiring:** Connect the `React` form to the `Go` API. Handle "Loading" and "Error" states.
+**Goal:** Turn the empty "Hello World" extension into a functional application that can read and write data to the database.
+
+Overview:
+
+* [x] **API Implementation:** Build the `GET /check` and `POST /rating` handlers.
+* [x] **UI Implementation:** Build the Rating component (Stars + Textarea) in `React` using `Tailwind`.
+* [x] **Wiring:** Connect the `React` form to the `Go` API. Handle "Loading" and "Error" states.
 
 ### Phase 4: The polish (Day 7)
 

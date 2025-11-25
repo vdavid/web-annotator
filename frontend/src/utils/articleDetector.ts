@@ -1,5 +1,6 @@
 /**
- * Checks if the current page is an article based on heuristics.
+ * Checks if a URL represents an article based on heuristics.
+ * This version works with a URL string rather than the current page.
  * Returns true if ANY of these conditions are met:
  * 1. Meta tag: Page has <meta property="og:type" content="article" />
  * 2. Schema.org: Page contains JSON-LD with "@type": "Article" or "NewsArticle"
@@ -17,11 +18,23 @@ export function isArticle(): boolean {
   }
 
   // Check URL structure
-  if (checkUrlStructure()) {
-    return true;
-  }
+  return checkUrlStructure();
+}
 
-  return false;
+/**
+ * Checks if a URL string represents an article based on URL structure.
+ * This is a simplified check that can work without DOM access.
+ */
+export function isArticleURL(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    const path = urlObj.pathname;
+    // Remove leading and trailing slashes, then split
+    const parts = path.split('/').filter((part) => part.length > 0);
+    return parts.length > 2;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -38,8 +51,10 @@ function checkMetaTag(): boolean {
  * Checks for JSON-LD schema with Article or NewsArticle type.
  */
 function checkJsonLdSchema(): boolean {
-  const scripts = document.querySelectorAll('script[type="application/ld+json"]');
-  
+  const scripts = document.querySelectorAll(
+    'script[type="application/ld+json"]'
+  );
+
   for (const script of scripts) {
     try {
       const content = script.textContent;
@@ -48,10 +63,10 @@ function checkJsonLdSchema(): boolean {
       }
 
       const data = JSON.parse(content);
-      
+
       // Handle both single objects and arrays
       const items = Array.isArray(data) ? data : [data];
-      
+
       for (const item of items) {
         if (item['@type'] === 'Article' || item['@type'] === 'NewsArticle') {
           return true;
@@ -59,7 +74,6 @@ function checkJsonLdSchema(): boolean {
       }
     } catch {
       // Invalid JSON, skip
-      continue;
     }
   }
 
@@ -76,4 +90,3 @@ function checkUrlStructure(): boolean {
   const parts = path.split('/').filter((part) => part.length > 0);
   return parts.length > 2;
 }
-

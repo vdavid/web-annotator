@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { isArticle } from './articleDetector';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { isArticle, isArticleURL } from './articleDetector';
 
 describe('articleDetector', () => {
   let originalLocation: Location;
@@ -155,6 +155,28 @@ describe('articleDetector', () => {
       });
 
       expect(isArticle()).toBe(false);
+    });
+  });
+
+  describe('isArticleURL', () => {
+    it('returns true when URL path depth is > 2', () => {
+      expect(isArticleURL('https://example.com/2025/10/my-post')).toBe(true);
+    });
+
+    it('returns false when path depth is exactly 2', () => {
+      expect(isArticleURL('https://example.com/2025/article')).toBe(false);
+    });
+
+    it('returns false when path depth is 1', () => {
+      expect(isArticleURL('https://example.com/article')).toBe(false);
+    });
+
+    it('returns false when path is root', () => {
+      expect(isArticleURL('https://example.com/')).toBe(false);
+    });
+
+    it('returns false for invalid URLs', () => {
+      expect(isArticleURL('not-a-url')).toBe(false);
     });
   });
 });
