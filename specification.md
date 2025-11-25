@@ -225,10 +225,10 @@ Body:
 
 ### Phase 2: Core logic (Days 3-4)
 
-* [ ] **URL Normalizer:** Write the `Go` function (with unit tests!) for the normalization rules.
-* [ ] **Article Detector:** Write the `TypeScript` utility to check meta tags/schema.
-* [ ] **Mock Auth:** Implement the `X-User-ID` middleware in `Go`.
-* [ ] **DB Migrations:** Create the `SQL` tables.
+* [x] **URL Normalizer:** Write the `Go` function (with unit tests!) for the normalization rules.
+* [x] **Article Detector:** Write the `TypeScript` utility to check meta tags/schema.
+* [x] **Mock Auth:** Implement the `X-User-ID` middleware in `Go`.
+* [x] **DB Migrations:** Create the `SQL` tables.
 
 ### Phase 3: The feature (Days 5-6)
 
