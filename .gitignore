@@ -1,0 +1,17 @@
+# IntelliJ
+/.idea
+/*.iml
+
+# Environment variables
+.env
+
+# Docker Compose override file
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Playwright
+frontend/playwright-report/
+frontend/test-results/
+
+# Air's logs and the built Go binary
+/backend/tmp
