@@ -58,7 +58,9 @@ export function Popup({ currentUrl }: PopupProps) {
                 <ReviewForm
                     initialRating={data.user_rating.score || 0}
                     initialComment={data.user_rating.comment || ''}
-                    onSubmit={submitRating}
+                    onSubmit={(score, comment) => {
+                        void submitRating(score, comment)
+                    }}
                     disabled={isSubmitting}
                 />
             </div>

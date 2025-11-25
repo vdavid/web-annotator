@@ -58,13 +58,14 @@ function checkJsonLdSchema(): boolean {
                 continue
             }
 
-            const data = JSON.parse(content)
+            const data = JSON.parse(content) as unknown
 
             // Handle both single objects and arrays
             const items = Array.isArray(data) ? data : [data]
 
             for (const item of items) {
-                if (item['@type'] === 'Article' || item['@type'] === 'NewsArticle') {
+                const typedItem = item as { '@type'?: string }
+                if (typedItem['@type'] === 'Article' || typedItem['@type'] === 'NewsArticle') {
                     return true
                 }
             }

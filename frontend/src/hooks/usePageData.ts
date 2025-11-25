@@ -48,17 +48,21 @@ export function usePageData(currentUrl: string | null): UsePageDataReturn {
         })
             .then(async (res) => {
                 if (!res.ok) {
-                    const errorData = await res.json().catch(() => ({ error: 'Unknown error' }))
-                    throw new Error(errorData.error || `HTTP ${res.status}`)
+                    const errorData = (await res.json().catch(() => ({ error: 'Unknown error' }))) as {
+                        error?: string
+                    }
+                    const statusCode = String(res.status)
+                    throw new Error(errorData.error ?? `HTTP ${statusCode}`)
                 }
-                return res.json()
+                return (await res.json()) as PageData
             })
-            .then((responseData: PageData) => {
+            .then((responseData) => {
                 setData(responseData)
                 setStatus('IDLE')
             })
-            .catch((err) => {
-                setError(err.message || 'Failed to fetch page data')
+            .catch((err: unknown) => {
+                const errorMessage = err instanceof Error ? err.message : 'Failed to fetch page data'
+                setError(errorMessage)
                 setStatus('ERROR')
             })
     }, [currentUrl])
@@ -86,11 +90,20 @@ export function usePageData(currentUrl: string | null): UsePageDataReturn {
             })
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
-                throw new Error(errorData.error || `HTTP ${response.status}`)
+                const errorData = (await response.json().catch(() => ({ error: 'Unknown error' }))) as {
+                    error?: string
+                }
+                const statusCode = String(response.status)
+                // noinspection ExceptionCaughtLocallyJS - We know, it's okay.
+                throw new Error(errorData.error ?? `HTTP ${statusCode}`)
             }
 
-            const result = await response.json()
+            const result = (await response.json()) as {
+                stats: {
+                    total_ratings: number
+                    average_score: number
+                }
+            }
 
             // Update local data with new stats
             if (data) {

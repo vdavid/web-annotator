@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "WebAnnotator",
-  "version": "0.1.0",
-  "description": "A social layer for the web that lets you rate articles and read community reviews",
+  "version": "0.3.0",
+  "description": "Rate articles and summarize/review them for reference",
   "permissions": ["activeTab", "storage", "scripting"],
   "action": {
     "default_popup": "index.html",

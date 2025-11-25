@@ -37,7 +37,7 @@ describe('usePageData', () => {
 
         vi.mocked(window.fetch).mockResolvedValueOnce({
             ok: true,
-            json: async () => mockData,
+            json: () => Promise.resolve(mockData),
         } as Response)
 
         const { result } = renderHook(() => usePageData('https://example.com/article'))
@@ -49,8 +49,11 @@ describe('usePageData', () => {
         expect(result.current.data).toEqual(mockData)
         expect(window.fetch).toHaveBeenCalledWith(
             expect.stringContaining('/api/v1/pages/check'),
+
             expect.objectContaining({
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 headers: expect.objectContaining({
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                     'X-User-ID': expect.any(String),
                 }),
             }),
@@ -73,7 +76,7 @@ describe('usePageData', () => {
         vi.mocked(window.fetch).mockResolvedValueOnce({
             ok: false,
             status: 400,
-            json: async () => ({ error: 'Invalid URL' }),
+            json: () => Promise.resolve({ error: 'Invalid URL' }),
         } as Response)
 
         const { result } = renderHook(() => usePageData('https://example.com/article'))
@@ -107,11 +110,11 @@ describe('usePageData', () => {
         vi.mocked(window.fetch)
             .mockResolvedValueOnce({
                 ok: true,
-                json: async () => mockCheckData,
+                json: () => Promise.resolve(mockCheckData),
             } as Response)
             .mockResolvedValueOnce({
                 ok: true,
-                json: async () => mockSubmitResponse,
+                json: () => Promise.resolve(mockSubmitResponse),
             } as Response)
 
         const { result } = renderHook(() => usePageData('https://example.com/article'))
@@ -128,12 +131,16 @@ describe('usePageData', () => {
 
         expect(window.fetch).toHaveBeenCalledWith(
             expect.stringContaining('/api/v1/ratings'),
+
             expect.objectContaining({
                 method: 'POST',
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 headers: expect.objectContaining({
                     'Content-Type': 'application/json',
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                     'X-User-ID': expect.any(String),
                 }),
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 body: expect.stringContaining('"score":8'),
             }),
         )
@@ -154,7 +161,7 @@ describe('usePageData', () => {
         vi.mocked(window.fetch)
             .mockResolvedValueOnce({
                 ok: true,
-                json: async () => mockCheckData,
+                json: () => Promise.resolve(mockCheckData),
             } as Response)
             .mockRejectedValueOnce(new Error('Submission failed'))
 

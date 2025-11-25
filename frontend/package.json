@@ -1,5 +1,5 @@
 {
-    "name": "web-annotator-frontend",
+    "name": "web-annotator-extension",
     "version": "0.1.0",
     "type": "module",
     "packageManager": "pnpm@10.22.0",

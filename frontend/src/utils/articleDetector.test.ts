@@ -44,7 +44,7 @@ describe('articleDetector', () => {
 
             // Mock location
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -61,7 +61,7 @@ describe('articleDetector', () => {
             document.head.appendChild(script)
 
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -78,7 +78,7 @@ describe('articleDetector', () => {
             document.head.appendChild(script)
 
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -87,7 +87,7 @@ describe('articleDetector', () => {
 
         it('returns true when URL path depth is > 2', () => {
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/2025/10/my-post' },
+                value: Object.assign({}, originalLocation, { pathname: '/2025/10/my-post' }),
                 writable: true,
             })
 
@@ -96,7 +96,7 @@ describe('articleDetector', () => {
 
         it('returns false when path depth is exactly 2', () => {
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/2025/article' },
+                value: Object.assign({}, originalLocation, { pathname: '/2025/article' }),
                 writable: true,
             })
 
@@ -105,7 +105,7 @@ describe('articleDetector', () => {
 
         it('returns false when path depth is 1', () => {
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/article' },
+                value: Object.assign({}, originalLocation, { pathname: '/article' }),
                 writable: true,
             })
 
@@ -114,7 +114,7 @@ describe('articleDetector', () => {
 
         it('returns false when path is root', () => {
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -123,7 +123,7 @@ describe('articleDetector', () => {
 
         it('returns false when none of the conditions are met', () => {
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -137,7 +137,7 @@ describe('articleDetector', () => {
             document.head.appendChild(script)
 
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
@@ -151,7 +151,7 @@ describe('articleDetector', () => {
             document.head.appendChild(script)
 
             Object.defineProperty(window, 'location', {
-                value: { ...originalLocation, pathname: '/' },
+                value: Object.assign({}, originalLocation, { pathname: '/' }),
                 writable: true,
             })
 
