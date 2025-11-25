@@ -1,17 +1,34 @@
-# IntelliJ
-/.idea
-/*.iml
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+tmp/
+server
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work
 
 # Environment variables
 .env
+.env.local
+.env.*.local
 
-# Docker Compose override file
-docker-compose.override.yml
-docker-compose.override.yaml
+# IDE
+/.cursor
+/.idea
 
-# Playwright
-frontend/playwright-report/
-frontend/test-results/
+# OS
+.DS_Store
+Thumbs.db
 
-# Air's logs and the built Go binary
-/backend/tmp
+# Logs
+*.log
+build-errors.log

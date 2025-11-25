@@ -218,10 +218,10 @@ Body:
 
 ### Phase 1: The skeleton (Days 1-2)
 
-* [ ] **Setup Repo:** Initialize monorepo (or separate folders) for /extension and /backend.
-* [ ] **Backend Hello World:** Set up `Go` + `Chi` + `Air`. Create a `GET /ping` endpoint.
-* [ ] **Frontend Hello World:** Set up `Vite` + `React` + `CRXJS`. Ensure the Popup opens in Chrome.
-* [ ] **Database:** Spin up `Postgres` in `Docker`. Connect `Go` to it.
+* [x] **Setup Repo:** Initialize monorepo (or separate folders) for /extension and /backend.
+* [x] **Backend Hello World:** Set up `Go` + `Chi` + `Air`. Create a `GET /ping` endpoint.
+* [x] **Frontend Hello World:** Set up `Vite` + `React` + `CRXJS`. Ensure the Popup opens in Chrome.
+* [x] **Database:** Spin up `Postgres` in `Docker`. Connect `Go` to it.
 
 ### Phase 2: Core logic (Days 3-4)
 
