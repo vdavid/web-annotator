@@ -1,0 +1,27 @@
+# Binaries
+server
+
+# Test files
+*_test.go
+*.test
+
+# Development files
+.env
+.env.local
+*.log
+
+# IDE files
+.cursor/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docs
+*.md
+!README.md

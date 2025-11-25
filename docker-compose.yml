@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     container_name: web-annotator-postgres
     environment:
       POSTGRES_USER: postgres
@@ -17,6 +15,33 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  migrate:
+    image: migrate/migrate:latest
+    container_name: web-annotator-migrate
+    command: -path /migrations -database "postgres://postgres:postgres@postgres:5432/webannotator?sslmode=disable" up
+    volumes:
+      - ./backend/migrations:/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: web-annotator-backend
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/webannotator?sslmode=disable
+      PORT: 52181
+    ports:
+      - "52181:52181"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres_data:

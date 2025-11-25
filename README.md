@@ -11,8 +11,6 @@ WebAnnotator deals with **articles** only, not web pages in general.
 
 ### Prerequisites
 
-- **Go 1.25+** installed
-- **Node.js 25+** and **pnpm** installed
 - **Docker** and **Docker Compose** installed
 - A Chromium-based browser (Chrome, Brave, Edge)
 
@@ -20,17 +18,25 @@ WebAnnotator deals with **articles** only, not web pages in general.
 
 1. `git clone git@github.com:vdavid/web-annotator.git` to clone the repo
 2. `cd web-annotator`
-3. `docker compose up -d` to start Postgres
-4. `cd backend && go mod download && cd ..` to install Go deps
-5. `cd backend`
-6. `go run cmd/server/main.go` to run the server
-7. `curl http://localhost:8080/ping` to test the server is running
+3. `docker compose up -d` to start all services (Postgres, migrations, and backend)
+    - The backend will automatically:
+        - Wait for Postgres to be ready
+        - Run database migrations
+        - Start the API server on port 52181
+4. `curl http://localhost:52181/ping` to test the server is running
+
+**Note:** The default configuration uses simple passwords suitable for local testing. For production deployments, update
+the database credentials in `docker-compose.yml` and ensure proper security practices.
+
+For local development, see [CONTRIBUTING.md](CONTRIBUTING.md) for a setup that doesn't use Docker.
 
 ## Features
 
-* **Article detection:** Automatically detects valid articles using Open Graph tags (og:type), JSON-LD schema, and URL path depth analysis.
+* **Article detection:** Automatically detects valid articles using Open Graph tags (og:type), JSON-LD schema, and URL
+  path depth analysis.
 * **One-click ratings:** Rate any article on a scale of 1–10.
-* **Instant context:** The extension icon updates immediately to show how many ratings a page has and the average rating.
+* **Instant context:** The extension icon updates immediately to show how many ratings a page has and the average
+  rating.
 * **Smart canonicalization:** Ratings persist even if you visit the link from a newsletter or social media wrapper.
 * **Dark mode:** The UI respects your system's light/dark preference.
 
@@ -40,7 +46,8 @@ Contributions are welcome!
 
 See CONTRIBUTING.md for details.
 
-Report issues and feature requests in the [issue tracker](https://www.google.com/search?q=https://github.com/vdavid/annotator/issues).
+Report issues and feature requests in
+the [issue tracker](https://www.google.com/search?q=https://github.com/vdavid/annotator/issues).
 
 Happy rating!
 
