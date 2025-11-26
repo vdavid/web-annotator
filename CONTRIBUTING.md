@@ -7,7 +7,7 @@ This doc is here to help you get started.
 ## Development getting started
 
 This setup lets you run the Go backend locally for debugging.
-It's different from [README#Running](README.md#running), which uses Docker Compose for everything.
+It's different from the prod guide in the [README](README.md), which uses Docker Compose for everything.
 
 The project uses [mise](https://mise.jdx.dev) for tool version management.
 It automatically installs and manages the correct versions of Go, Node, and pnpm.
@@ -49,9 +49,11 @@ It automatically installs and manages the correct versions of Go, Node, and pnpm
 
 ## Keeping things up to date
 
-For a step-by-step process on updating tools, dependencies, and Docker images, see [`docs/maintenance.md`](docs/maintenance.md).
+For a step-by-step process on updating tools, dependencies, and Docker images, see [`docs/maintenance.md`](docs/maintenance.md). (TODO it doesn't exist yet!)
 
-### Architecture
+## Architecture
+
+### Parts
 
 The system consists of these main parts:
 
@@ -60,10 +62,11 @@ The system consists of these main parts:
 3. **The service worker** runs in the background to fetch rating counts on page load and update the browser badge icon.
 4. **The backend** stored the data, coordinates login, and does URL normalization.
 
-### URL normalization
+### Data flow
 
-To ensure data consistency across the web, the backend contains a normalization logic:
-
-* **Stripping:** Removes utm_*, gclid, fbclid, and other tracking parameters.
-* **Sorting:** Reorders remaining query parameters alphabetically.
-* **Cleaning:** Removes anchors (#header), trailing slashes, and www subdomains.
+1. **Browser navigation:** User visits a page.
+2. **Heuristic check (Frontend):** Extension checks if the page is an "Article".
+3. **Badge update:** Service Worker calls API (`GET /check`) to get rating counts; updates the extension icon badge.
+4. **User action:** User clicks the extension icon (Popup).
+5. **Data fetch:** Popup requests existing rating for the current URL.
+6. **Submission:** User submits data; Backend normalizes the URL and saves to `Postgres`.
